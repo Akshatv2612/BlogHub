@@ -1,12 +1,12 @@
-import React, {useEffect} from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { useForm } from 'react-hook-form'
 import { Button, Input, Select, RTE } from '../index.js'
 import appwriteService from '../../appwrite/config.js'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 
-function PostForm(post) {
-    const { register, handleSubmit, watch, control,setValue,getValues } = useForm({
+function PostForm({ post }) {
+    const { register, handleSubmit, watch, control, setValue, getValues } = useForm({
         defaultValues: {
             title: post?.title || "",
             slug: post?.$id || "",
@@ -15,8 +15,10 @@ function PostForm(post) {
         },
     });
 
+    const [uploadedIMG, setUploadedIMG] = useState()
     const navigate = useNavigate();
     const userData = useSelector(state => state.userData)
+    const title = watch('title')
 
     const submit = async (data) => {
         if (post) {
@@ -27,6 +29,7 @@ function PostForm(post) {
                     ...data,
                     image: file ? file.$id : undefined
                 })
+                console.log(Post)
 
                 if (Post) {
                     navigate(`/post/${Post.$id}`)
@@ -51,18 +54,23 @@ function PostForm(post) {
                 .replace(/[^a-zA-Z\d\s]+/g, "-")
                 .replace(/\s/g, "-");
         }
-        else{
+        else {
             return "";
         }
     }, []);
 
-    useEffect(()=>{
-        const subscription= watch((data,{name})=>{
-            setValue("slug",slugTransform(data.title),{shouldValidate:true});
-        })
+    useEffect(() => {
+        setValue("slug", slugTransform(title), { shouldValidate: true });
+    }, [title])
 
-        return ()=>subscription.unsubscribe();
-    },[watch,slugTransform,setValue])
+    useEffect(() => {
+        if (post) {
+            appwriteService.getFilePreview(post.image)
+                .then((img) => {
+                    setUploadedIMG(img.href)
+                })
+        }
+    }, [])
 
     return (
         <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
@@ -77,10 +85,8 @@ function PostForm(post) {
                     label="Slug :"
                     placeholder="Slug"
                     className="mb-4"
+                    disabled={true}
                     {...register("slug", { required: true })}
-                    onInput={(e) => {
-                        setValue("slug", slugTransform(e.currentTarget.value), { shouldValidate: true });
-                    }}
                 />
                 <RTE label="Content :" name="content" control={control} defaultValue={getValues("content")} />
             </div>
@@ -95,7 +101,7 @@ function PostForm(post) {
                 {post && (
                     <div className="w-full mb-4">
                         <img
-                            src={appwriteService.getFilePreview(post.image)}
+                            src={uploadedIMG}
                             alt={post.title}
                             className="rounded-lg"
                         />

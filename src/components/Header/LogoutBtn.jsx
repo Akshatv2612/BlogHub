@@ -11,6 +11,9 @@ function LogoutBtn() {
             .then(() => {
                 dispatch(logOut())
             })
+            .catch((error)=>{
+                console.log('Logout Error',error)
+            })
     }
 
     return (

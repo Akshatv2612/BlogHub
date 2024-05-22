@@ -16,7 +16,7 @@ export class AppwriteService {
 
     async createPost({ title, content, image, status, userId }) {
         try {
-            await this.database.createDocument(
+            return await this.database.createDocument(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
                 ID.unique(),
@@ -35,7 +35,7 @@ export class AppwriteService {
 
     async updatePost(slug, { title, content, image, status }) {
         try {
-            await this.database.updateDocument(
+            return await this.database.updateDocument(
                 conf.appwriteDatabaseId,
                 conf.appwriteCollectionId,
                 slug,
@@ -76,7 +76,7 @@ export class AppwriteService {
         }
     }
 
-    async getPosts(queries = Query.equal("status", "active")) {
+    async getPosts(queries = [Query.equal("status", "active")]) {
         try {
             return await this.database.listDocuments(
                 conf.appwriteDatabaseId,

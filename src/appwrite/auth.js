@@ -14,14 +14,16 @@ export class AuthService {
 
     async register(name, email, password) {
         try {
-            const user = await this.account.create(ID.unique(), name, email, password)
+            const user = await this.account.create(ID.unique(), email, name, password)
             if (user) {
-                return this.login(email,password)
+                console.log(user)
+                return await this.login(email,password)
             }
             else {
                 return user
             }
         } catch (error) {
+            console.log('Error while registering',error)
             throw error
         }
     }
@@ -37,7 +39,7 @@ export class AuthService {
 
     async logout(){
         try {
-            await this.account.deleteSession("current")
+            await this.account.deleteSessions()
         } catch (error) {
             throw error
         }
@@ -53,5 +55,5 @@ export class AuthService {
     }
 }
 
-const authService = new AuthService()
+const authService = new AuthService();
 export default authService

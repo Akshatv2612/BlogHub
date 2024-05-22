@@ -7,29 +7,45 @@ import { useSelector } from "react-redux";
 
 export default function Post() {
     const [post, setPost] = useState(null);
+    const [postImage, setPostimage] = useState(null)
     const { slug } = useParams();
     const navigate = useNavigate();
-
-    const userData = useSelector((state) => state.auth.userData);
-
+    const userData = useSelector((state) => state.userData);
     const isAuthor = post && userData ? post.userId === userData.$id : false;
 
     useEffect(() => {
         if (slug) {
-            appwriteService.getPost(slug).then((post) => {
-                if (post) setPost(post);
-                else navigate("/");
-            });
-        } else navigate("/");
+            appwriteService.getPost(slug)
+                .then((post) => {
+                    appwriteService.getFilePreview(post.image)
+                        .then((img) => {
+                            setPostimage(img.href)
+                            console.log(postImage)
+                        })
+                    setPost(post)
+                })
+        }
+        else {
+            navigate('/')
+        }
     }, [slug, navigate]);
 
     const deletePost = () => {
-        appwriteService.deletePost(post.$id).then((status) => {
-            if (status) {
-                appwriteService.deleteFile(post.featuredImage);
-                navigate("/");
-            }
-        });
+        try {
+            appwriteService.deletePost(post.$id)
+                .then(() => {
+                    try {
+                        appwriteService.deleteFile(post.image)
+                        .then(()=>{
+                            navigate('/')
+                        })
+                    } catch (error) {
+                        console.log('Error while deleting post image')
+                    }
+                })
+        } catch (error) {
+            console.log('Error while deleting post')
+        }
     };
 
     return post ? (
@@ -37,7 +53,7 @@ export default function Post() {
             <Container>
                 <div className="w-full flex justify-center mb-4 relative border rounded-xl p-2">
                     <img
-                        src={appwriteService.getFilePreview(post.image)}
+                        src={postImage}
                         alt={post.title}
                         className="rounded-xl"
                     />
@@ -60,7 +76,7 @@ export default function Post() {
                 </div>
                 <div className="browser-css">
                     {parse(post.content)}
-                    </div>
+                </div>
             </Container>
         </div>
     ) : null;

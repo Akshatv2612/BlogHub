@@ -1,23 +1,26 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import authService from '../appwrite/auth'
+import authService from '../appwrite/auth.js'
 import { useDispatch } from 'react-redux'
-import { logIn } from '../slices/authSlice'
+import { logIn } from '../slices/authSlice.js'
 import { useNavigate } from 'react-router-dom'
 import { Input, Button, Logo } from './index.js'
+import { Link } from 'react-router-dom'
 
 function SignUp() {
-    const [register, handleSubmit] = useForm()
-    const [error, setError] = useState()
+    const {register, handleSubmit} = useForm()
+    const [error, setError] = useState('')
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const onSubmitHandler = (data) => {
+    const onSubmitHandler =async (data) => {
+        console.log(data)
         setError('')
         try {
-            const session = authService.register(data.name, data.email, data.password)
+            const session =await authService.register(data.name, data.email, data.password)
+            console.log(session)
             if (session) {
-                const user = authService.getCurrentUser()
+                const user =await authService.getCurrentUser()
                 if (user) {
                     dispatch(logIn(user))
                     navigate('/')
@@ -31,11 +34,6 @@ function SignUp() {
     return (
         <div className="flex items-center justify-center">
             <div className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}>
-                <div className="mb-2 flex justify-center">
-                    <span className="inline-block w-full max-w-[100px]">
-                        <Logo width="100%" />
-                    </span>
-                </div>
                 <h2 className="text-center text-2xl font-bold leading-tight">Sign up to create account</h2>
                 <p className="mt-2 text-center text-base text-black/60">
                     Already have an account?&nbsp;

@@ -5,19 +5,22 @@ import authService from '../appwrite/auth'
 import { logIn } from '../slices/authSlice'
 import { useNavigate } from 'react-router-dom'
 import { Input, Button ,Logo} from './index.js'
+import { Link } from 'react-router-dom'
 
 function Login() {
-    const [register, handleSubmit] = useForm()
+    const {register, handleSubmit} = useForm()
     const [error, setError] = useState('')
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const onSubmitHandler = (data) => {
+    const onSubmitHandler =async (data) => {
         setError('')
         try {
-            const session = authService.login(data.email, data.password)
+            const session =await authService.login(data.email, data.password)
+            console.log('Session',session)
             if (session) {
-                const user = authService.getCurrentUser()
+                const user = await authService.getCurrentUser()
+                console.log('User',user)
                 if (user) {
                     dispatch(logIn(user))
                     navigate('/')
@@ -48,7 +51,7 @@ function Login() {
                         Sign Up
                     </Link>
                 </p>
-                {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
+                {error && <p className="text-red-600 mt-8 text-center">Error while login</p>}
                 <form onSubmit={handleSubmit(onSubmitHandler)} className='mt-8'>
                     <div className='space-y-5'>
                         <Input
