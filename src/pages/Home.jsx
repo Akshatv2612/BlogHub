@@ -15,26 +15,19 @@ function Home() {
             if (posts) {
                 setPosts(posts.documents)
             }
+            setLoader(false)
         }).catch((error) => {
             console.log('Home', error)
+            setLoader(false)
         })
 
-        setLoader(false)
     }, [])
 
     if (loader) {
         return (
-            <div className="w-full py-8 mt-4 text-center">
-                    <Container>
-                        <div className="flex flex-wrap">
-                            <div className="p-2 w-full">
-                                <h1 className="text-2xl font-bold hover:text-gray-500">
-                                    Loading...
-                                </h1>
-                            </div>
-                        </div>
-                    </Container>
-                </div>
+            <div className="w-full h-[300px] flex justify-center items-center">
+                <img src='../../public/assets/spinner.gif'></img>
+            </div>
         )
     }
     else {

@@ -4,10 +4,12 @@ import appwriteService from "../appwrite/config";
 import { Button, Container } from "../components";
 import parse from "html-react-parser";
 import { useSelector } from "react-redux";
+import LoadingMSG from "../components/LoadingMSG";
 
 export default function Post() {
     const [post, setPost] = useState(null);
     const [postImage, setPostimage] = useState(null)
+    const [deletion,setDeletion]=useState(false)
     const { slug } = useParams();
     const navigate = useNavigate();
     const userData = useSelector((state) => state.userData);
@@ -30,9 +32,10 @@ export default function Post() {
         }
     }, [slug, navigate]);
 
-    const deletePost = () => {
+    const deletePost =async () => {
+        setDeletion(true)
         try {
-            appwriteService.deletePost(post.$id)
+            await appwriteService.deletePost(post.$id)
                 .then(() => {
                     try {
                         appwriteService.deleteFile(post.image)
@@ -46,16 +49,18 @@ export default function Post() {
         } catch (error) {
             console.log('Error while deleting post')
         }
+        setDeletion(false)
     };
 
     return post ? (
         <div className="py-8">
+           {deletion ? <LoadingMSG message='Deleting your post..' /> : null}
             <Container>
-                <div className="w-full flex justify-center mb-4 relative border rounded-xl p-2">
-                    <img
+                <div className="w-full bg-gray-300 flex justify-center relative border rounded-t-xl p-2">
+                    <img width={'500px'}
                         src={postImage}
                         alt={post.title}
-                        className="rounded-xl"
+                        className="rounded"
                     />
 
                     {isAuthor && (
@@ -71,10 +76,10 @@ export default function Post() {
                         </div>
                     )}
                 </div>
-                <div className="w-full mb-6">
+                <div className="w-full py-4 bg-slate-500 mb-6 rounded-b-xl">
                     <h1 className="text-2xl font-bold">{post.title}</h1>
                 </div>
-                <div className="browser-css">
+                <div className="text-left bg-gray-100 p-8 rounded-b-xl">
                     {parse(post.content)}
                 </div>
             </Container>

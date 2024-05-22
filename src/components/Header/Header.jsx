@@ -28,7 +28,7 @@ function Header() {
     {
       name: 'Login',
       path: '/login',
-      active: !isLoggedIn 
+      active: !isLoggedIn
     },
     {
       name: 'Sign Up',
@@ -38,18 +38,18 @@ function Header() {
   ]
 
   return (
-    <header className='py-3 bg-gray-500 shadow'>
+    <header className='py-3 bg-gray-600 shadow rounded-sm'>
       <Container>
-        <nav>
-          <div>
+        <nav className='flex justify-between'>
+          <div className='flex items-center'>
             <Link to='/'>
-              <Logo width='100px' />
+              <Logo width='70px' />
             </Link>
           </div>
-          <ul className='flex'>
+          <ul className='flex text-white gap-3'>
             {navItems.map((item) => item.active && (
               <li key={item.name}>
-                <button onClick={() => { navigate(item.path) }} className='inline-bock px-6 py-2 duration-200 hover:bg-blue-100 rounded-full'>
+                <button onClick={() => { navigate(item.path) }} className='inline-bock px-6 py-2 duration-200 hover:bg-blue-100 hover:text-black rounded-full'>
                   {item.name}
                 </button>
               </li>

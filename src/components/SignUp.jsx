@@ -8,19 +8,21 @@ import { Input, Button, Logo } from './index.js'
 import { Link } from 'react-router-dom'
 
 function SignUp() {
-    const {register, handleSubmit} = useForm()
+    const { register, handleSubmit } = useForm()
+    const [submitting, setSubmitting] = useState(false)
     const [error, setError] = useState('')
     const dispatch = useDispatch()
     const navigate = useNavigate()
 
-    const onSubmitHandler =async (data) => {
+    const onSubmitHandler = async (data) => {
+        setSubmitting(true)
         console.log(data)
         setError('')
         try {
-            const session =await authService.register(data.name, data.email, data.password)
+            const session = await authService.register(data.name, data.email, data.password)
             console.log(session)
             if (session) {
-                const user =await authService.getCurrentUser()
+                const user = await authService.getCurrentUser()
                 if (user) {
                     dispatch(logIn(user))
                     navigate('/')
@@ -29,10 +31,12 @@ function SignUp() {
         } catch (error) {
             setError(error.message)
         }
+        setSubmitting(false)
     }
 
     return (
         <div className="flex items-center justify-center">
+            {submitting ? <LoadingMSG message='Registering..' /> : null}
             <div className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}>
                 <h2 className="text-center text-2xl font-bold leading-tight">Sign up to create account</h2>
                 <p className="mt-2 text-center text-base text-black/60">

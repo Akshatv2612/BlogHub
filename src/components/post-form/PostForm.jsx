@@ -4,6 +4,7 @@ import { Button, Input, Select, RTE } from '../index.js'
 import appwriteService from '../../appwrite/config.js'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
+import LoadingMSG from '../LoadingMSG.jsx'
 
 function PostForm({ post }) {
     const { register, handleSubmit, watch, control, setValue, getValues } = useForm({
@@ -15,25 +16,26 @@ function PostForm({ post }) {
         },
     });
 
+    const [submitting,setSubmitting]=useState(false)
     const [uploadedIMG, setUploadedIMG] = useState()
     const navigate = useNavigate();
     const userData = useSelector(state => state.userData)
     const title = watch('title')
 
     const submit = async (data) => {
+        setSubmitting(true)
         if (post) {
             const file = data.image[0] ? await appwriteService.uploadFile(data.image[0]) : null;
             if (file) {
                 appwriteService.deleteFile(post.image);
-                const Post = await appwriteService.updatePost(post.$id, {
-                    ...data,
-                    image: file ? file.$id : undefined
-                })
-                console.log(Post)
+            }
+            const Post = await appwriteService.updatePost(post.$id, {
+                ...data,
+                image: file ? file.$id : post.image
+            })
 
-                if (Post) {
-                    navigate(`/post/${Post.$id}`)
-                }
+            if (Post) {
+                navigate(`/post/${Post.$id}`)
             }
         } else {
             const file = data.image[0] ? await appwriteService.uploadFile(data.image[0]) : null;
@@ -44,6 +46,7 @@ function PostForm({ post }) {
                 }
             }
         }
+        setSubmitting(false)
     };
 
     const slugTransform = useCallback((value) => {
@@ -73,6 +76,8 @@ function PostForm({ post }) {
     }, [])
 
     return (
+        <div>
+        {submitting ?<LoadingMSG message='Saving Post'/> :null }
         <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
             <div className="w-2/3 px-2">
                 <Input
@@ -114,10 +119,11 @@ function PostForm({ post }) {
                     {...register("status", { required: true })}
                 />
                 <Button type="submit" bgColor={post ? "bg-green-500" : undefined} className="w-full">
-                    {post ? "Update" : "Submit"}
+                    {post? "Update" : "Create"}
                 </Button>
             </div>
         </form>
+        </div>
     );
 }
 
