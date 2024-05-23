@@ -26,6 +26,11 @@ function Header() {
       active: isLoggedIn
     },
     {
+      name:'Account',
+      path:'/account',
+      active: isLoggedIn
+    },
+    {
       name: 'Login',
       path: '/login',
       active: !isLoggedIn

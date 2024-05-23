@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import appwriteService from "../appwrite/config";
-import { Container, PostCard } from '../components'
+import { Container, PostCard, Loader } from '../components'
 import { useSelector } from 'react-redux';
 
 function Home() {
@@ -8,7 +8,6 @@ function Home() {
     const [loader, setLoader] = useState(true)
     const isLoggedIn = useSelector(state => state.isloggedIn)
     const userData = useSelector(state => state.userData)
-    console.log('Home', userData)
 
     useEffect(() => {
         appwriteService.getPosts().then((posts) => {
@@ -17,7 +16,6 @@ function Home() {
             }
             setLoader(false)
         }).catch((error) => {
-            console.log('Home', error)
             setLoader(false)
         })
 
@@ -25,9 +23,7 @@ function Home() {
 
     if (loader) {
         return (
-            <div className="w-full h-[300px] flex justify-center items-center">
-                <img src='../../public/assets/spinner.gif'></img>
-            </div>
+            <Loader />
         )
     }
     else {
@@ -57,15 +53,13 @@ function Home() {
                                 </div>
                             )) :
                             <div className="w-full py-8 mt-4 text-center">
-                                <Container>
-                                    <div className="flex flex-wrap">
-                                        <div className="p-2 w-full">
-                                            <h1 className="text-2xl font-bold hover:text-gray-500">
-                                                No Posts at this moment
-                                            </h1>
-                                        </div>
+                                <div className="flex flex-wrap">
+                                    <div className="p-2 w-full">
+                                        <h1 className="text-2xl font-bold hover:text-gray-500">
+                                            No Posts at this moment
+                                        </h1>
                                     </div>
-                                </Container>
+                                </div>
                             </div>
                         }
                     </div>

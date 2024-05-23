@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import appwriteService from "../appwrite/config";
-import { Button, Container } from "../components";
-import parse from "html-react-parser";
 import { useSelector } from "react-redux";
-import LoadingMSG from "../components/LoadingMSG";
+import parse from "html-react-parser";
+import appwriteService from "../appwrite/config";
+import { Button, Container,LoaderMSG } from "../components";
 
 export default function Post() {
     const [post, setPost] = useState(null);
@@ -54,7 +53,7 @@ export default function Post() {
 
     return post ? (
         <div className="py-8">
-           {deletion ? <LoadingMSG message='Deleting your post..' /> : null}
+           {deletion ? <LoaderMSG message='Deleting your post..' /> : null}
             <Container>
                 <div className="w-full bg-gray-300 flex justify-center relative border rounded-t-xl p-2">
                     <img width={'500px'}

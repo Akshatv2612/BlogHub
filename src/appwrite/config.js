@@ -88,6 +88,18 @@ export class AppwriteService {
         }
     }
 
+    async getPostsByUser(userId) {
+        try {
+            return await this.database.listDocuments(
+                conf.appwriteDatabaseId,
+                conf.appwriteCollectionId,
+                [Query.equal("userId", userId)]
+            )
+        } catch (error) {
+            throw error
+        }
+    }
+
     async uploadFile(file) {
         try {
             return await this.storage.createFile(   //will return file Id

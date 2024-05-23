@@ -4,7 +4,7 @@ import { Button, Input, Select, RTE } from '../index.js'
 import appwriteService from '../../appwrite/config.js'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-import LoadingMSG from '../LoadingMSG.jsx'
+import LoadingMSG from '../spinners/LoaderMSG.jsx'
 
 function PostForm({ post }) {
     const { register, handleSubmit, watch, control, setValue, getValues } = useForm({

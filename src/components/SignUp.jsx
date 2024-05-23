@@ -6,6 +6,7 @@ import { logIn } from '../slices/authSlice.js'
 import { useNavigate } from 'react-router-dom'
 import { Input, Button, Logo } from './index.js'
 import { Link } from 'react-router-dom'
+import {LoaderMSG} from '../components'
 
 function SignUp() {
     const { register, handleSubmit } = useForm()
@@ -36,8 +37,8 @@ function SignUp() {
 
     return (
         <div className="flex items-center justify-center">
-            {submitting ? <LoadingMSG message='Registering..' /> : null}
-            <div className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}>
+            {submitting ? <LoaderMSG message='Registering..' /> : null}
+            <div className={`mx-auto w-full max-w-lg bg-gray-500 rounded-xl p-10 border border-black/10`}>
                 <h2 className="text-center text-2xl font-bold leading-tight">Sign up to create account</h2>
                 <p className="mt-2 text-center text-base text-black/60">
                     Already have an account?&nbsp;
@@ -67,7 +68,7 @@ function SignUp() {
                                 required: true,
                                 validate: {
                                     matchPatern: (value) => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) ||
-                                        "Email address must be a valid address",
+                                        setError("Email address must be a valid address"),
                                 }
                             })}
                         />

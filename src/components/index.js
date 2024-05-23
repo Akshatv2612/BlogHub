@@ -8,9 +8,30 @@ import Logo from "./Logo";
 import PostCard from "./PostCard";
 import Select from "./Select";
 import RTE from "./RTE";
-import AuthLayout from "./AuthLayout";
+import AuthLayout from "./layouts/AuthLayout";
 import Container from "./container/container";
 import PostForm from "./post-form/PostForm";
 import LogoutBtn from './Header/LogoutBtn';
+import Loader from "./spinners/Loader";
+import LoaderMSG from "./spinners/LoaderMSG";
+import EditPostLayout from "./layouts/EditPostLayout";
 
-export { Header, Footer, Button, Input, Login, SignUp, Logo, PostCard, Select, RTE, AuthLayout, Container, PostForm, LogoutBtn };
+export {
+    Header,
+    Footer,
+    Button,
+    Input,
+    Login,
+    SignUp,
+    Logo,
+    PostCard,
+    Select,
+    RTE,
+    AuthLayout,
+    Container,
+    PostForm,
+    LogoutBtn,
+    Loader,
+    LoaderMSG,
+    EditPostLayout
+};

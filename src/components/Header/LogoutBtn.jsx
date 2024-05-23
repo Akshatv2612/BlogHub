@@ -2,7 +2,7 @@ import React,{useState} from 'react'
 import { useDispatch } from 'react-redux'
 import { logOut } from '../../slices/authSlice'
 import authService from '../../appwrite/auth'
-import LoadingMSG from '../LoadingMSG'
+import LoadingMSG from '../spinners/LoaderMSG'
 
 function LogoutBtn() {
     const dispatch = useDispatch()

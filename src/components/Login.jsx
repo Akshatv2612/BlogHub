@@ -6,7 +6,7 @@ import { logIn } from '../slices/authSlice'
 import { useNavigate } from 'react-router-dom'
 import { Input, Button, Logo } from './index.js'
 import { Link } from 'react-router-dom'
-import LoadingMSG from './LoadingMSG.jsx'
+import LoadingMSG from './spinners/LoaderMSG.jsx'
 
 function Login() {
     const { register, handleSubmit } = useForm()
@@ -20,10 +20,8 @@ function Login() {
         setError('')
         try {
             const session = await authService.login(data.email, data.password)
-            console.log('Session', session)
             if (session) {
                 const user = await authService.getCurrentUser()
-                console.log('User', user)
                 if (user) {
                     dispatch(logIn(user))
                     navigate('/')
@@ -40,7 +38,7 @@ function Login() {
             className='flex items-center justify-center w-full'
         >
             {submitting ? <LoadingMSG message='Signing In' /> : null}
-            <div className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}>
+            <div className={`mx-auto w-full max-w-lg bg-gray-500 rounded-xl p-10 border border-black/10`}>
                 <div className="mb-2 flex justify-center">
                     <span className="inline-block w-full max-w-[100px]">
                         <Logo width="100%" />

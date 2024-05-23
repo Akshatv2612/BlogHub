@@ -14,7 +14,7 @@ export class AuthService {
 
     async register(name, email, password) {
         try {
-            const user = await this.account.create(ID.unique(), email, name, password)
+            const user = await this.account.create(ID.unique(), email, password, name)
             if (user) {
                 console.log(user)
                 return await this.login(email,password)
@@ -51,6 +51,15 @@ export class AuthService {
             return user
         } catch (error) {
             return null
+        }
+    }
+
+    async updateUserName(name){
+        try {
+            const user=await this.account.updateName(name)
+            return user
+        } catch (error) {
+            throw error
         }
     }
 }
