@@ -33,6 +33,7 @@ export class AuthService {
             const user=await this.account.createEmailPasswordSession(email,password)
             return user
         } catch (error) {
+            console.log(error)
             throw error
         }
     }

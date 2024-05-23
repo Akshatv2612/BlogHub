@@ -21,7 +21,6 @@ export default function Post() {
                     appwriteService.getFilePreview(post.image)
                         .then((img) => {
                             setPostimage(img.href)
-                            console.log(postImage)
                         })
                     setPost(post)
                 })

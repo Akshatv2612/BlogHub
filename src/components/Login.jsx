@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { set, useForm } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
 import { useDispatch } from 'react-redux'
 import authService from '../appwrite/auth'
 import { logIn } from '../slices/authSlice'
@@ -54,7 +54,7 @@ function Login() {
                         Sign Up
                     </Link>
                 </p>
-                {error && <p className="text-red-600 mt-8 text-center">Error while login</p>}
+                {error && <p className="text-red-600 mt-8 text-center">Error while login{`${error}`}</p>}
                 <form onSubmit={handleSubmit(onSubmitHandler)} className='mt-8'>
                     <div className='space-y-5'>
                         <Input

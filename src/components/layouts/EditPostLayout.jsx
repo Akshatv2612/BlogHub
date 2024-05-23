@@ -5,7 +5,7 @@ import appwriteService from '../../appwrite/config'
 
 function EditPostLayout({ children }) {
     const navigate = useNavigate()
-    const slug = useParams()
+    const {slug} = useParams()
     const user = useSelector(state => state.userData)
 
     useEffect(() => {
