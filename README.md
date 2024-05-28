@@ -1,5 +1,6 @@
+# BlogHub
+A user-friendly and responsive blogs and articles sharing web application, where user can create posts using inbuilt editor. In this application user can create, update, delete posts and make it visible to other users.
 
-<<<<<<< HEAD
 ## Table of Contents
 - [BlogHub](#bloghub)
   - [Table of Contents](#table-of-contents)
@@ -74,5 +75,3 @@ If someone wants to edit the Name, wants there posts at one place. All these fea
 BlogHub is a user-friendly web application for sharing blogs and articles, featuring a responsive design and intuitive features. Users can register and log in using email and password, create, update, and delete posts, and view posts created by other users. The application employs React.js for frontend development and Appwrite for backend services. React-redux and Redux-toolkit are used for efficient state management, while react-hook-form ensures seamless handling of forms. Good coding practices are adhered to throughout the project, ensuring reliability and maintainability.
 
 ---
-=======
->>>>>>> 3970777d1cb79a595df01ff96ad8ced85f02c103
