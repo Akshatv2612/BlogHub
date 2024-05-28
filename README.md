@@ -53,7 +53,7 @@ If someone wants to edit the Name, wants there posts at one place. All these fea
 
 ## Tech stack
 
-<div style="display: flex; flex-wrap: wrap; margin: 5px; gap:20px; justify-content:center; align-item:center"><img width="60" src="https://raw.githubusercontent.com/gilbarbara/logos/master/logos/react.svg"/><img width="60" src="https://raw.githubusercontent.com/gilbarbara/logos/master/logos/nodejs.svg"/><img width="60" src="https://raw.githubusercontent.com/gilbarbara/logos/master/logos/react-router.svg"/><img width="60" src="https://raw.githubusercontent.com/gilbarbara/logos/master/logos/redux.svg"/><img width="80" src="https://raw.githubusercontent.com/gilbarbara/logos/master/logos/tailwindcss.svg"/>
+<div style="display: flex; flex-wrap: wrap; margin: '5px'; gap:'20px'; justify-content:center; align-item:center"><img width="60" src="https://raw.githubusercontent.com/gilbarbara/logos/master/logos/react.svg"/><img width="60" src="https://raw.githubusercontent.com/gilbarbara/logos/master/logos/nodejs.svg"/><img width="60" src="https://raw.githubusercontent.com/gilbarbara/logos/master/logos/react-router.svg"/><img width="60" src="https://raw.githubusercontent.com/gilbarbara/logos/master/logos/redux.svg"/><img width="80" src="https://raw.githubusercontent.com/gilbarbara/logos/master/logos/tailwindcss.svg"/>
 <img width="80" src="https://raw.githubusercontent.com/gilbarbara/logos/master/logos/appwrite.svg"/>
 </div>
 
