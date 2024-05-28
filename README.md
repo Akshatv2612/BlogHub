@@ -49,7 +49,7 @@ The "Edit" and "Delete" buttons appears only to the owner of the post. The post 
 
 If someone wants to edit the Name, wants there posts at one place. All these features are present at account page.
 
-<img src="./screenshots/account.jpeg" alt="Alt Text - description of the image" width="80%" />
+<img src="./screenshots/account.jpeg" alt="Alt Text - description of the image" width="60%" />
 
 ## Tech stack
 
